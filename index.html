@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Mali Kreator</title>
+
+<!-- PWA / APP FEEL -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#ffcc00">
+
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  touch-action:none;
+  user-select:none;
+  background:#fff;
+  font-family: "Comic Sans MS", Arial, sans-serif;
+}
+
+canvas {
+  display:block;
+}
+
+/* TOOLBAR */
+#toolbar {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(255,255,255,0.95);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:5px;
+  padding:5px;
+  z-index:1000;
+}
+
+.color, .tool {
+  width:38px;
+  height:38px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  background:#fff;
+  box-shadow:0 2px 0 #d4a800;
+}
+
+/* EXIT ZONA */
+#exitZone {
+  position:fixed;
+  top:0;
+  right:0;
+  width:80px;
+  height:80px;
+  z-index:2000;
+}
+
+/* START OVERLAY */
+#welcome {
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#ffe066,#ffcc00);
+  z-index:3000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+#welcome h1 { font-size:2em; color:#d43; }
+#welcome p { font-size:1.1em; }
+#welcome button {
+  font-size:1.2em;
+  padding:12px 24px;
+  border:none;
+  border-radius:12px;
+  background:#ff5555;
+  color:#fff;
+}
+
+/* ESC MESSAGE */
+#lockMsg {
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:#ffe066;
+  z-index:4000;
+  font-size:2em;
+  text-align:center;
+  padding-top:40vh;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+<div id="exitZone"></div>
+
+<div id="toolbar">
+  <div class="color" style="background:red" data-color="red"></div>
+  <div class="color" style="background:blue" data-color="blue"></div>
+  <div class="color" style="background:green" data-color="green"></div>
+  <div class="color" style="background:black" data-color="black"></div>
+  <div class="color" style="background:orange" data-color="orange"></div>
+
+  <div class="tool" data-tool="pen">✏️</div>
+  <div class="tool" data-tool="eraser">🧽</div>
+  <div class="tool" data-tool="rainbow">🌈</div>
+
+  <div class="tool" data-tool="⭐">⭐</div>
+  <div class="tool" data-tool="❤️">❤️</div>
+  <div class="tool" data-tool="🐶">🐶</div>
+  <div class="tool" data-tool="🐱">🐱</div>
+  <div class="tool" data-tool="🚗">🚗</div>
+
+  <div class="tool" data-tool="clear">🗑️</div>
+</div>
+
+<div id="welcome">
+  <h1>🎨 Mali Kreator</h1>
+  <p>
+    Sigurna fullscreen igra za crtanje.<br><br>
+    <b>Roditelji:</b><br>
+    Izlaz je moguć samo tapkanjem<br>
+    <b>8× u gornjem desnom uglu</b>.
+  </p>
+  <button id="start">Počni</button>
+</div>
+
+<div id="lockMsg">🎨 Nastavi crtati!</div>
+
+<script>
+/* FULLSCREEN */
+function goFS() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(()=>{});
+  }
+}
+document.addEventListener("click", goFS);
+
+/* RELock nakon ESC */
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    goFS();
+    const m = document.getElementById("lockMsg");
+    m.style.display="block";
+    setTimeout(()=>m.style.display="none",1200);
+  }
+});
+
+/* CANVAS */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+function resize(){
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize(); window.addEventListener("resize", resize);
+
+let drawing=false, color="black", tool="pen", rainbow=false;
+const stamps=["⭐","❤️","🐶","🐱","🚗"];
+
+canvas.addEventListener("pointerdown", e=>{
+  drawing=true;
+  ctx.beginPath();
+  ctx.moveTo(e.clientX,e.clientY);
+  stamp(e.clientX,e.clientY);
+});
+
+canvas.addEventListener("pointermove", e=>{
+  if(!drawing) return;
+  if(tool==="pen"||tool==="eraser"){
+    ctx.lineTo(e.clientX,e.clientY);
+    ctx.strokeStyle=tool==="eraser"?"#fff":(rainbow?rand():color);
+    ctx.lineWidth=12;
+    ctx.lineCap="round";
+    ctx.stroke();
+  }
+});
+
+canvas.addEventListener("pointerup", ()=>drawing=false);
+canvas.addEventListener("pointerleave", ()=>drawing=false);
+
+function stamp(x,y){
+  if(stamps.includes(tool)){
+    ctx.font="60px serif";
+    ctx.fillStyle=rainbow?rand():color;
+    ctx.fillText(tool,x-30,y+30);
+  }
+}
+function rand(){ return `hsl(${Math.random()*360},100%,50%)`; }
+
+/* TOOLBAR */
+document.querySelectorAll(".color").forEach(c=>{
+  c.onclick=()=>{ color=c.dataset.color; rainbow=false; };
+});
+document.querySelectorAll(".tool").forEach(t=>{
+  t.onclick=()=>{
+    const tt=t.dataset.tool;
+    if(tt==="clear") ctx.clearRect(0,0,canvas.width,canvas.height);
+    else if(tt==="rainbow"){ rainbow=true; tool="pen"; }
+    else tool=tt;
+  };
+});
+
+/* START */
+document.getElementById("start").onclick=()=>{
+  document.getElementById("welcome").style.display="none";
+  goFS();
+};
+
+/* EXIT 8x TAP */
+let taps=0, timer=null;
+document.getElementById("exitZone").onclick=()=>{
+  taps++;
+  if(taps===1) timer=setTimeout(()=>taps=0,3000);
+  if(taps>=8){
+    clearTimeout(timer);
+    document.exitFullscreen();
+    alert("Izlaz");
+    taps=0;
+  }
+};
+
+/* BLOK */
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("touchmove",e=>e.preventDefault(),{passive:false});
+</script>
+
+</body>
+</html>
