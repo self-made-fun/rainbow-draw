@@ -2,22 +2,19 @@
 <html lang="bs">
 <head>
 <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CK4N3PWTWC"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-CK4N3PWTWC', {
-    anonymize_ip: true
-  });
+  gtag('config', 'G-CK4N3PWTWC', { anonymize_ip: true });
 </script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Mali Kreator</title>
+<title>Mali Kreator & Genijalci</title>
 
-<!-- PWA / APP FEEL -->
+<!-- PWA -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -34,12 +31,84 @@ html, body {
   font-family: "Comic Sans MS", Arial, sans-serif;
 }
 
-canvas {
-  display:block;
+/* ===== MENI ===== */
+#menu {
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#ffe066,#ffcc00);
+  z-index:5000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
 }
 
-/* TOOLBAR */
-#toolbar {
+#menu h1 { 
+  font-size:2em; 
+  color:#d43; 
+  margin-bottom:10px;
+}
+
+#menu p { 
+  font-size:1em; 
+  color:#333;
+  margin-bottom:20px;
+}
+
+.games-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  max-width:400px;
+  width:100%;
+}
+
+.game-card {
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  cursor:pointer;
+  transition:all 0.3s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  border:3px solid transparent;
+}
+
+.game-card:hover {
+  transform:translateY(-5px) scale(1.02);
+}
+
+.game-card:active {
+  transform:scale(0.98);
+}
+
+.game-icon {
+  font-size:2.5rem;
+  margin-bottom:8px;
+}
+
+.game-title {
+  font-size:1rem;
+  font-weight:bold;
+  color:#333;
+}
+
+/* ===== CRTANJE (Mali Kreator) ===== */
+#drawApp {
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+}
+
+#drawCanvas {
+  display:block;
+  background:#fff;
+}
+
+#drawToolbar {
   position:fixed;
   bottom:0;
   left:0;
@@ -53,7 +122,7 @@ canvas {
   z-index:1000;
 }
 
-.color, .tool {
+.draw-color, .draw-tool {
   width:38px;
   height:38px;
   border-radius:8px;
@@ -63,10 +132,200 @@ canvas {
   font-size:22px;
   background:#fff;
   box-shadow:0 2px 0 #d4a800;
+  cursor:pointer;
 }
 
-/* EXIT ZONA */
-#exitZone {
+/* ===== IGRA SPajanja (Mali Genijalci) ===== */
+#matchApp {
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  flex-direction:column;
+  align-items:center;
+  padding:8px;
+  overflow-y:auto;
+}
+
+.match-header {
+  text-align:center;
+  color:white;
+  margin:5px 0;
+  width:100%;
+}
+
+.match-header h1 {
+  font-size:1.3rem;
+  text-shadow:2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.score-board {
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  margin-top:5px;
+  font-size:0.9rem;
+  flex-wrap:wrap;
+}
+
+.match-controls {
+  display:flex;
+  gap:6px;
+  margin-bottom:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.cat-btn {
+  padding:6px 12px;
+  border:none;
+  border-radius:20px;
+  font-size:0.75rem;
+  font-weight:bold;
+  cursor:pointer;
+  color:white;
+  opacity:0.7;
+  transition:all 0.3s;
+}
+
+.cat-btn.active {
+  opacity:1;
+  transform:scale(1.05);
+}
+
+.cat-btn:nth-child(1) { background:#ff6b6b; }
+.cat-btn:nth-child(2) { background:#4ecdc4; }
+.cat-btn:nth-child(3) { background:#ffe66d; color:#333; }
+.cat-btn:nth-child(4) { background:#f38181; }
+.cat-btn:nth-child(5) { background:#aa96da; }
+
+.match-game-box {
+  background:white;
+  border-radius:15px;
+  padding:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  max-width:500px;
+  min-height:0;
+}
+
+.match-info {
+  text-align:center;
+  margin-bottom:8px;
+  font-size:0.9rem;
+  color:#555;
+  font-weight:bold;
+}
+
+.match-grid {
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:6px;
+  flex:1;
+}
+
+.match-card {
+  aspect-ratio:1;
+  background:#f0f0f0;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  cursor:pointer;
+  transition:all 0.3s;
+  border:2px solid #ddd;
+  position:relative;
+  overflow:hidden;
+}
+
+.match-card-content {
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.match-card-name {
+  font-size:0.5rem;
+  color:#333;
+  background:rgba(255,255,255,0.95);
+  padding:1px 3px;
+  border-radius:3px;
+  opacity:0;
+  transition:opacity 0.3s;
+  margin-bottom:2px;
+}
+
+.match-card.matched .match-card-name {
+  opacity:1;
+}
+
+.match-card.selected {
+  border-color:#667eea;
+  background:#e3f2fd;
+  transform:scale(1.05);
+}
+
+.match-card.matched {
+  background:#c8e6c9;
+  border-color:#4caf50;
+  animation:bounce 0.5s;
+}
+
+.match-card.wrong {
+  background:#ffcdd2;
+  border-color:#f44336;
+  animation:shake 0.4s;
+}
+
+@keyframes bounce {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+@keyframes shake {
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  75%{transform:translateX(5px);}
+}
+
+/* Boje za kartice */
+.mc-red .match-card-content { color:#ff6b6b; }
+.mc-blue .match-card-content { color:#4dabf7; }
+.mc-green .match-card-content { color:#69db7c; }
+.mc-yellow .match-card-content { color:#ffd43b; }
+.mc-purple .match-card-content { color:#da77f2; }
+.mc-orange .match-card-content { color:#ff922b; }
+.mc-pink .match-card-content { color:#ff8fab; }
+.mc-brown .match-card-content { color:#8b4513; }
+
+/* ===== ZAJEDNIČKI ELEMENTI ===== */
+.back-btn {
+  position:fixed;
+  top:10px;
+  left:10px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.9);
+  color:#333;
+  border:none;
+  font-size:1.3rem;
+  cursor:pointer;
+  z-index:3000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+.exit-zone {
   position:fixed;
   top:0;
   right:0;
@@ -75,40 +334,74 @@ canvas {
   z-index:2000;
 }
 
-/* START OVERLAY */
-#welcome {
+.exit-counter {
+  position:fixed;
+  top:5px;
+  right:5px;
+  color:rgba(255,255,255,0.4);
+  font-size:0.7rem;
+  z-index:2001;
+  pointer-events:none;
+}
+
+/* Modal */
+.modal {
+  display:none;
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background:linear-gradient(135deg,#ffe066,#ffcc00);
-  z-index:3000;
-  display:flex;
-  flex-direction:column;
+  background:rgba(0,0,0,0.9);
   justify-content:center;
   align-items:center;
-  text-align:center;
+  z-index:4000;
   padding:20px;
 }
 
-#welcome h1 { font-size:2em; color:#d43; }
-#welcome p { font-size:1.1em; }
-#welcome button {
-  font-size:1.2em;
-  padding:12px 24px;
-  border:none;
-  border-radius:12px;
-  background:#ff5555;
-  color:#fff;
+.modal.show {
+  display:flex;
 }
 
-/* ESC MESSAGE */
+.modal-box {
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  max-width:300px;
+  width:100%;
+  animation:pop 0.4s;
+}
+
+@keyframes pop {
+  from{transform:scale(0.5);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+.modal-box h2 {
+  color:#667eea;
+  font-size:1.5rem;
+  margin-bottom:10px;
+}
+
+.big-btn {
+  background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  color:white;
+  padding:12px 25px;
+  font-size:1rem;
+  margin-top:12px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  width:100%;
+}
+
+/* Lock message */
 #lockMsg {
   display:none;
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
   background:#ffe066;
-  z-index:4000;
+  z-index:6000;
   font-size:2em;
   text-align:center;
   padding-top:40vh;
@@ -118,138 +411,454 @@ canvas {
 
 <body>
 
-<canvas id="canvas"></canvas>
-<div id="exitZone"></div>
-
-<div id="toolbar">
-  <div class="color" style="background:red" data-color="red"></div>
-  <div class="color" style="background:blue" data-color="blue"></div>
-  <div class="color" style="background:green" data-color="green"></div>
-  <div class="color" style="background:black" data-color="black"></div>
-  <div class="color" style="background:orange" data-color="orange"></div>
-
-  <div class="tool" data-tool="pen">✏️</div>
-  <div class="tool" data-tool="eraser">🧽</div>
-  <div class="tool" data-tool="rainbow">🌈</div>
-
-  <div class="tool" data-tool="⭐">⭐</div>
-  <div class="tool" data-tool="❤️">❤️</div>
-  <div class="tool" data-tool="🐶">🐶</div>
-  <div class="tool" data-tool="🐱">🐱</div>
-  <div class="tool" data-tool="🚗">🚗</div>
-
-  <div class="tool" data-tool="clear">🗑️</div>
-</div>
-
-<div id="welcome">
-  <h1>🎨 Mali Kreator</h1>
-  <p>
-    Sigurna fullscreen igra za crtanje.<br><br>
-    <b>Roditelji:</b><br>
-    Izlaz je moguć samo tapkanjem<br>
-    <b>8× u gornjem desnom uglu</b>.
+<!-- ===== MENI ===== -->
+<div id="menu">
+  <h1>🌟 Mali Kreator & Genijalci 🌟</h1>
+  <p>Izaberi što želiš raditi:</p>
+  
+  <div class="games-grid">
+    <div class="game-card" onclick="showApp('draw')" style="border-color:#ff6b6b;">
+      <div class="game-icon">🎨</div>
+      <div class="game-title">Crtaj</div>
+    </div>
+    
+    <div class="game-card" onclick="showApp('match')" style="border-color:#4ecdc4;">
+      <div class="game-icon">🎯</div>
+      <div class="game-title">Spoji Parove</div>
+    </div>
+  </div>
+  
+  <p style="margin-top:20px;font-size:0.9em;color:#666;">
+    <b>Roditelji:</b> Izlaz = 8× tap gore desno
   </p>
-  <button id="start">Počni</button>
 </div>
 
-<div id="lockMsg">🎨 Nastavi crtati!</div>
+<!-- ===== CRTANJE ===== -->
+<div id="drawApp">
+  <button class="back-btn" onclick="showMenu()">←</button>
+  <div class="exit-zone" onclick="handleExit()"></div>
+  <div class="exit-counter" id="drawExitCounter"></div>
+  
+  <canvas id="drawCanvas"></canvas>
+  
+  <div id="drawToolbar">
+    <div class="draw-color" style="background:red" data-color="red"></div>
+    <div class="draw-color" style="background:blue" data-color="blue"></div>
+    <div class="draw-color" style="background:green" data-color="green"></div>
+    <div class="draw-color" style="background:black" data-color="black"></div>
+    <div class="draw-color" style="background:orange" data-color="orange"></div>
+    <div class="draw-tool" data-tool="pen">✏️</div>
+    <div class="draw-tool" data-tool="eraser">🧽</div>
+    <div class="draw-tool" data-tool="rainbow">🌈</div>
+    <div class="draw-tool" data-tool="⭐">⭐</div>
+    <div class="draw-tool" data-tool="❤️">❤️</div>
+    <div class="draw-tool" data-tool="🐶">🐶</div>
+    <div class="draw-tool" data-tool="🐱">🐱</div>
+    <div class="draw-tool" data-tool="🚗">🚗</div>
+    <div class="draw-tool" data-tool="clear">🗑️</div>
+  </div>
+</div>
+
+<!-- ===== IGRA SPAJANJA ===== -->
+<div id="matchApp">
+  <button class="back-btn" onclick="showMenu()">←</button>
+  <div class="exit-zone" onclick="handleExit()"></div>
+  <div class="exit-counter" id="matchExitCounter"></div>
+  
+  <div class="match-header">
+    <h1>🎯 Spoji Parove</h1>
+    <div class="score-board">
+      <span>Nivo: <span id="level">1</span>/3</span>
+      <span>Parova: <span id="pairs">8</span></span>
+      <span>⭐ <span id="stars">0</span></span>
+    </div>
+  </div>
+
+  <div class="match-controls">
+    <button class="cat-btn active" onclick="setCat('colors')">Boje</button>
+    <button class="cat-btn" onclick="setCat('letters')">Slova</button>
+    <button class="cat-btn" onclick="setCat('numbers')">Brojevi</button>
+    <button class="cat-btn" onclick="setCat('animals')">Životinje</button>
+    <button class="cat-btn" onclick="setCat('fruits')">Voće</button>
+  </div>
+
+  <div class="match-game-box">
+    <div class="match-info" id="matchInfo">Pronađi 8 parova!</div>
+    <div class="match-grid" id="matchGrid"></div>
+  </div>
+</div>
+
+<!-- Modali -->
+<div class="modal" id="levelModal">
+  <div class="modal-box">
+    <h2>🎉 Bravo!</h2>
+    <p>Nivo <span id="completedLevel">1</span> završen!</p>
+    <button class="big-btn" onclick="nextLevel()">Sljedeći Nivo ➡️</button>
+  </div>
+</div>
+
+<div class="modal" id="winModal">
+  <div class="modal-box">
+    <h2>🏆 Svaka čast!</h2>
+    <p>Svi nivoi završeni!</p>
+    <p>Ukupno: <span id="finalStars">0</span> ⭐</p>
+    <button class="big-btn" onclick="restartMatch()">Igraj Ponovo</button>
+    <button class="big-btn" onclick="showMenu()" style="margin-top:8px;background:#95e1d3;">🏠 Nazad na Meni</button>
+  </div>
+</div>
+
+<div id="lockMsg">🎨 Nastavi!</div>
 
 <script>
-/* FULLSCREEN */
+/* ===== ZAJEDNIČKE FUNKCIJE ===== */
+let currentApp = null;
+let exitTaps = 0;
+let exitTimer = null;
+
+function showApp(app) {
+  currentApp = app;
+  document.getElementById('menu').style.display = 'none';
+  
+  if (app === 'draw') {
+    document.getElementById('drawApp').style.display = 'block';
+    initDraw();
+  } else if (app === 'match') {
+    document.getElementById('matchApp').style.display = 'flex';
+    initMatch();
+  }
+  
+  goFS();
+}
+
+function showMenu() {
+  currentApp = null;
+  document.getElementById('menu').style.display = 'flex';
+  document.getElementById('drawApp').style.display = 'none';
+  document.getElementById('matchApp').style.display = 'none';
+  document.getElementById('levelModal').classList.remove('show');
+  document.getElementById('winModal').classList.remove('show');
+}
+
+function handleExit() {
+  exitTaps++;
+  
+  // Pokaži brojač
+  const counterId = currentApp === 'draw' ? 'drawExitCounter' : 'matchExitCounter';
+  document.getElementById(counterId).textContent = exitTaps + '/8';
+  
+  if (exitTimer) clearTimeout(exitTimer);
+  exitTimer = setTimeout(() => {
+    exitTaps = 0;
+    document.getElementById(counterId).textContent = '';
+  }, 3000);
+  
+  if (exitTaps >= 8) {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+    alert('Izlaz iz aplikacije');
+    exitTaps = 0;
+  }
+}
+
 function goFS() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch(()=>{});
   }
 }
-document.addEventListener("click", goFS);
 
-/* RELock nakon ESC */
-document.addEventListener("fullscreenchange", () => {
-  if (!document.fullscreenElement) {
+/* Relock nakon ESC */
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && currentApp) {
     goFS();
-    const m = document.getElementById("lockMsg");
-    m.style.display="block";
-    setTimeout(()=>m.style.display="none",1200);
+    const m = document.getElementById('lockMsg');
+    m.style.display = 'block';
+    setTimeout(() => m.style.display = 'none', 1200);
   }
 });
 
-/* CANVAS */
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-function resize(){
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+/* ===== CRTANJE ===== */
+let drawCanvas, drawCtx;
+let drawing = false, drawColor = 'black', drawTool = 'pen', rainbow = false;
+const stamps = ['⭐','❤️','🐶','🐱','🚗'];
+
+function initDraw() {
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  resizeDraw();
+  window.addEventListener('resize', resizeDraw);
+  
+  // Eventi
+  drawCanvas.addEventListener('pointerdown', e => {
+    drawing = true;
+    drawCtx.beginPath();
+    drawCtx.moveTo(e.clientX, e.clientY);
+    doStamp(e.clientX, e.clientY);
+  });
+  
+  drawCanvas.addEventListener('pointermove', e => {
+    if (!drawing) return;
+    if (drawTool === 'pen' || drawTool === 'eraser') {
+      drawCtx.lineTo(e.clientX, e.clientY);
+      drawCtx.strokeStyle = drawTool === 'eraser' ? '#fff' : (rainbow ? randColor() : drawColor);
+      drawCtx.lineWidth = 12;
+      drawCtx.lineCap = 'round';
+      drawCtx.stroke();
+    }
+  });
+  
+  drawCanvas.addEventListener('pointerup', () => drawing = false);
+  drawCanvas.addEventListener('pointerleave', () => drawing = false);
+  
+  // Toolbar
+  document.querySelectorAll('.draw-color').forEach(c => {
+    c.onclick = () => { drawColor = c.dataset.color; rainbow = false; };
+  });
+  
+  document.querySelectorAll('.draw-tool').forEach(t => {
+    t.onclick = () => {
+      const tt = t.dataset.tool;
+      if (tt === 'clear') drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      else if (tt === 'rainbow') { rainbow = true; drawTool = 'pen'; }
+      else drawTool = tt;
+    };
+  });
 }
-resize(); window.addEventListener("resize", resize);
 
-let drawing=false, color="black", tool="pen", rainbow=false;
-const stamps=["⭐","❤️","🐶","🐱","🚗"];
+function resizeDraw() {
+  if (!drawCanvas) return;
+  drawCanvas.width = innerWidth;
+  drawCanvas.height = innerHeight;
+}
 
-canvas.addEventListener("pointerdown", e=>{
-  drawing=true;
-  ctx.beginPath();
-  ctx.moveTo(e.clientX,e.clientY);
-  stamp(e.clientX,e.clientY);
-});
-
-canvas.addEventListener("pointermove", e=>{
-  if(!drawing) return;
-  if(tool==="pen"||tool==="eraser"){
-    ctx.lineTo(e.clientX,e.clientY);
-    ctx.strokeStyle=tool==="eraser"?"#fff":(rainbow?rand():color);
-    ctx.lineWidth=12;
-    ctx.lineCap="round";
-    ctx.stroke();
-  }
-});
-
-canvas.addEventListener("pointerup", ()=>drawing=false);
-canvas.addEventListener("pointerleave", ()=>drawing=false);
-
-function stamp(x,y){
-  if(stamps.includes(tool)){
-    ctx.font="60px serif";
-    ctx.fillStyle=rainbow?rand():color;
-    ctx.fillText(tool,x-30,y+30);
+function doStamp(x, y) {
+  if (stamps.includes(drawTool)) {
+    drawCtx.font = '60px serif';
+    drawCtx.fillStyle = rainbow ? randColor() : drawColor;
+    drawCtx.fillText(drawTool, x - 30, y + 30);
   }
 }
-function rand(){ return `hsl(${Math.random()*360},100%,50%)`; }
 
-/* TOOLBAR */
-document.querySelectorAll(".color").forEach(c=>{
-  c.onclick=()=>{ color=c.dataset.color; rainbow=false; };
-});
-document.querySelectorAll(".tool").forEach(t=>{
-  t.onclick=()=>{
-    const tt=t.dataset.tool;
-    if(tt==="clear") ctx.clearRect(0,0,canvas.width,canvas.height);
-    else if(tt==="rainbow"){ rainbow=true; tool="pen"; }
-    else tool=tt;
-  };
-});
+function randColor() {
+  return `hsl(${Math.random() * 360}, 100%, 50%)`;
+}
 
-/* START */
-document.getElementById("start").onclick=()=>{
-  document.getElementById("welcome").style.display="none";
+/* ===== IGRA SPAJANJA ===== */
+const matchData = {
+  colors: {
+    items: [
+      { id: 'red', val: '🔴', name: 'Crvena', cls: 'mc-red' },
+      { id: 'blue', val: '🔵', name: 'Plava', cls: 'mc-blue' },
+      { id: 'green', val: '🟢', name: 'Zelena', cls: 'mc-green' },
+      { id: 'yellow', val: '🟡', name: 'Žuta', cls: 'mc-yellow' },
+      { id: 'purple', val: '🟣', name: 'Ljubičasta', cls: 'mc-purple' },
+      { id: 'orange', val: '🟠', name: 'Narandžasta', cls: 'mc-orange' },
+      { id: 'brown', val: '🟤', name: 'Smeđa', cls: 'mc-brown' },
+      { id: 'black', val: '⚫', name: 'Crna', cls: 'mc-black' },
+      { id: 'red', val: '🔴', name: 'Crvena', cls: 'mc-red' },
+      { id: 'blue', val: '🔵', name: 'Plava', cls: 'mc-blue' },
+      { id: 'green', val: '🟢', name: 'Zelena', cls: 'mc-green' },
+      { id: 'yellow', val: '🟡', name: 'Žuta', cls: 'mc-yellow' },
+      { id: 'purple', val: '🟣', name: 'Ljubičasta', cls: 'mc-purple' },
+      { id: 'orange', val: '🟠', name: 'Narandžasta', cls: 'mc-orange' },
+      { id: 'brown', val: '🟤', name: 'Smeđa', cls: 'mc-brown' },
+      { id: 'black', val: '⚫', name: 'Crna', cls: 'mc-black' }
+    ]
+  },
+  letters: {
+    items: [
+      { id: 'A', val: 'A', name: 'A' }, { id: 'B', val: 'B', name: 'B' },
+      { id: 'C', val: 'C', name: 'C' }, { id: 'D', val: 'D', name: 'D' },
+      { id: 'E', val: 'E', name: 'E' }, { id: 'F', val: 'F', name: 'F' },
+      { id: 'G', val: 'G', name: 'G' }, { id: 'H', val: 'H', name: 'H' },
+      { id: 'I', val: 'I', name: 'I' }, { id: 'J', val: 'J', name: 'J' },
+      { id: 'K', val: 'K', name: 'K' }, { id: 'L', val: 'L', name: 'L' },
+      { id: 'M', val: 'M', name: 'M' }, { id: 'N', val: 'N', name: 'N' },
+      { id: 'O', val: 'O', name: 'O' }, { id: 'P', val: 'P', name: 'P' }
+    ]
+  },
+  numbers: {
+    items: [
+      { id: '1', val: '1', name: '1' }, { id: '2', val: '2', name: '2' },
+      { id: '3', val: '3', name: '3' }, { id: '4', val: '4', name: '4' },
+      { id: '5', val: '5', name: '5' }, { id: '6', val: '6', name: '6' },
+      { id: '7', val: '7', name: '7' }, { id: '8', val: '8', name: '8' },
+      { id: '9', val: '9', name: '9' }, { id: '10', val: '10', name: '10' },
+      { id: '11', val: '11', name: '11' }, { id: '12', val: '12', name: '12' },
+      { id: '13', val: '13', name: '13' }, { id: '14', val: '14', name: '14' },
+      { id: '15', val: '15', name: '15' }, { id: '16', val: '16', name: '16' }
+    ]
+  },
+  animals: {
+    items: [
+      { id: 'cat', val: '🐱', name: 'Mačka' }, { id: 'dog', val: '🐶', name: 'Pas' },
+      { id: 'rabbit', val: '🐰', name: 'Zec' }, { id: 'lion', val: '🦁', name: 'Lav' },
+      { id: 'bear', val: '🐻', name: 'Medvjed' }, { id: 'panda', val: '🐼', name: 'Panda' },
+      { id: 'monkey', val: '🐵', name: 'Majmun' }, { id: 'fox', val: '🦊', name: 'Lisica' },
+      { id: 'tiger', val: '🐯', name: 'Tigar' }, { id: 'elephant', val: '🐘', name: 'Slon' },
+      { id: 'giraffe', val: '🦒', name: 'Žirafa' }, { id: 'zebra', val: '🦓', name: 'Zebra' },
+      { id: 'penguin', val: '🐧', name: 'Pingvin' }, { id: 'frog', val: '🐸', name: 'Žaba' },
+      { id: 'pig', val: '🐷', name: 'Svinja' }, { id: 'cow', val: '🐮', name: 'Krava' }
+    ]
+  },
+  fruits: {
+    items: [
+      { id: 'apple', val: '🍎', name: 'Jabuka' }, { id: 'banana', val: '🍌', name: 'Banana' },
+      { id: 'orange', val: '🍊', name: 'Narandža' }, { id: 'grapes', val: '🍇', name: 'Grožđe' },
+      { id: 'strawberry', val: '🍓', name: 'Jagoda' }, { id: 'watermelon', val: '🍉', name: 'Lubenica' },
+      { id: 'pear', val: '🍐', name: 'Kruška' }, { id: 'cherry', val: '🍒', name: 'Trešnja' },
+      { id: 'peach', val: '🍑', name: 'Breskva' }, { id: 'mango', val: '🥭', name: 'Mango' },
+      { id: 'pineapple', val: '🍍', name: 'Ananas' }, { id: 'coconut', val: '🥥', name: 'Kokos' },
+      { id: 'kiwi', val: '🥝', name: 'Kivi' }, { id: 'lemon', val: '🍋', name: 'Limun' },
+      { id: 'greenapple', val: '🍏', name: 'Zelena Jabuka' }, { id: 'melon', val: '🍈', name: 'Dinja' }
+    ]
+  }
+};
+
+const levels = [8, 12, 16];
+let matchCategory = 'colors';
+let matchLevel = 0;
+let matchStars = 0;
+let matchedCount = 0;
+let selectedCards = [];
+let matchLocked = false;
+
+function initMatch() {
+  matchLevel = 0;
+  matchStars = 0;
+  matchedCount = 0;
+  selectedCards = [];
+  matchLocked = false;
+  createMatchBoard();
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function createMatchBoard() {
+  const grid = document.getElementById('matchGrid');
+  grid.innerHTML = '';
+  
+  const pairCount = levels[matchLevel];
+  const items = matchData[matchCategory].items.slice(0, pairCount);
+  
+  document.getElementById('level').textContent = matchLevel + 1;
+  document.getElementById('pairs').textContent = pairCount;
+  document.getElementById('matchInfo').textContent = `Pronađi ${pairCount} parova!`;
+  document.getElementById('stars').textContent = matchStars;
+  
+  let cards = [];
+  items.forEach(item => {
+    cards.push({...item});
+    cards.push({...item});
+  });
+  
+  shuffle(cards);
+  
+  cards.forEach(card => {
+    const div = document.createElement('div');
+    div.className = 'match-card';
+    if (card.cls) div.classList.add(card.cls);
+    div.dataset.id = card.id;
+    div.innerHTML = `
+      <div class="match-card-content">${card.val}</div>
+      <div class="match-card-name">${card.name}</div>
+    `;
+    div.onclick = () => clickMatchCard(div);
+    grid.appendChild(div);
+  });
+}
+
+function clickMatchCard(card) {
+  if (matchLocked || card.classList.contains('matched') || card.classList.contains('selected')) return;
+  
+  card.classList.add('selected');
+  selectedCards.push(card);
+  
+  if (selectedCards.length === 2) checkMatchPair();
+}
+
+function checkMatchPair() {
+  matchLocked = true;
+  const [c1, c2] = selectedCards;
+  
+  if (c1.dataset.id === c2.dataset.id) {
+    setTimeout(() => {
+      c1.classList.remove('selected');
+      c2.classList.remove('selected');
+      c1.classList.add('matched');
+      c2.classList.add('matched');
+      
+      matchedCount++;
+      matchStars += 10;
+      document.getElementById('stars').textContent = matchStars;
+      
+      selectedCards = [];
+      matchLocked = false;
+      
+      if (matchedCount === levels[matchLevel]) matchLevelComplete();
+    }, 300);
+  } else {
+    setTimeout(() => {
+      c1.classList.add('wrong');
+      c2.classList.add('wrong');
+      setTimeout(() => {
+        c1.classList.remove('selected', 'wrong');
+        c2.classList.remove('selected', 'wrong');
+        selectedCards = [];
+        matchLocked = false;
+      }, 400);
+    }, 400);
+  }
+}
+
+function matchLevelComplete() {
+  matchStars += levels[matchLevel] * 2;
+  document.getElementById('stars').textContent = matchStars;
+  
+  setTimeout(() => {
+    if (matchLevel < 2) {
+      document.getElementById('completedLevel').textContent = matchLevel + 1;
+      document.getElementById('levelModal').classList.add('show');
+    } else {
+      document.getElementById('finalStars').textContent = matchStars;
+      document.getElementById('winModal').classList.add('show');
+    }
+  }, 600);
+}
+
+function nextLevel() {
+  document.getElementById('levelModal').classList.remove('show');
+  matchLevel++;
+  matchedCount = 0;
+  selectedCards = [];
+  matchLocked = false;
+  createMatchBoard();
+}
+
+function restartMatch() {
+  document.getElementById('winModal').classList.remove('show');
+  initMatch();
+}
+
+function setCat(cat) {
+  matchCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  restartMatch();
+}
+
+/* ===== START ===== */
+window.onload = () => {
   goFS();
 };
-
-/* EXIT 8x TAP */
-let taps=0, timer=null;
-document.getElementById("exitZone").onclick=()=>{
-  taps++;
-  if(taps===1) timer=setTimeout(()=>taps=0,3000);
-  if(taps>=8){
-    clearTimeout(timer);
-    document.exitFullscreen();
-    alert("Izlaz");
-    taps=0;
-  }
-};
-
-/* BLOK */
-document.addEventListener("contextmenu",e=>e.preventDefault());
-document.addEventListener("touchmove",e=>e.preventDefault(),{passive:false});
 </script>
 
 </body>
